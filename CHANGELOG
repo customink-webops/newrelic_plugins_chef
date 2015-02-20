@@ -1,5 +1,9 @@
 CHANGELOG
 
+1.1.1 - 2015-02-20
+* Update newrelic_plugins::aws_cloudwatch to support encrypted data bags for 
+  the NewRelic key and the AWS key/secret pair.
+
 1.1.0 - 2014-09-25
 ------------------
 * No longer use sudo for service management but runs as the provided user

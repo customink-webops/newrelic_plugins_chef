@@ -1,6 +1,20 @@
 # verify ruby dependency
 verify_ruby 'AWS Cloudwatch Plugin'
 
+# Get NewRelic key & AWS creds from an encrypted data bag.
+newrelic_license_key = Chef::EncryptedDataBagItem.load('newrelic_plugins','new_relic_license_key')
+aws_credentials = Chef::EncryptedDataBagItem.load('newrelic_plugins','aws')
+
+# Save NewRelic key & AWS creds to variables.
+newrelic_license = newrelic_license_key['NEW_RELIC_LICENSE_KEY']
+newrelic_plugin_aws_access_key = aws_credentials['NEWRELIC_PLUGIN_AWS_ACCESS_KEY']
+newrelic_plugin_secret_secret_key = aws_credentials['NEWRELIC_PLUGIN_AWS_SECRET_KEY']
+
+# Save encrypted data bag values to attributes.
+node[:newrelic][:license_key] = newrelic_license
+node[:newrelic][:aws_cloudwatch][:aws_access_key] = newrelic_plugin_aws_access_key
+node[:newrelic][:aws_cloudwatch][:aws_secret_key] = newrelic_plugin_secret_secret_key
+
 # check required attributes
 verify_attributes do
   attributes [
