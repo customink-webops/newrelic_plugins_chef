@@ -1,5 +1,5 @@
 # verify ruby dependency
-verify_ruby 'AWS Cloudwatch Plugin'
+#verify_ruby 'AWS Cloudwatch Plugin'
 
 # Get NewRelic key & AWS creds from an encrypted data bag.
 newrelic_license_key = Chef::EncryptedDataBagItem.load('newrelic_plugins','new_relic_license_key')
@@ -11,16 +11,19 @@ newrelic_plugin_aws_access_key = aws_credentials['NEWRELIC_PLUGIN_AWS_ACCESS_KEY
 newrelic_plugin_secret_secret_key = aws_credentials['NEWRELIC_PLUGIN_AWS_SECRET_KEY']
 
 # Save encrypted data bag values to attributes.
-node[:newrelic][:license_key] = newrelic_license
-node[:newrelic][:aws_cloudwatch][:aws_access_key] = newrelic_plugin_aws_access_key
-node[:newrelic][:aws_cloudwatch][:aws_secret_key] = newrelic_plugin_secret_secret_key
+node.default[:newrelic][:license_key] = newrelic_license
+node.default[:newrelic][:aws_cloudwatch][:aws_access_key] = newrelic_plugin_aws_access_key
+node.default[:newrelic][:aws_cloudwatch][:aws_secret_key] = newrelic_plugin_secret_secret_key
+
+# Attributes required to be set.
+node.default[:newrelic][:aws_cloudwatch][:agents] = [ 'ec2' ]
+node.default[:newrelic][:aws_cloudwatch][:install_path] = '/opt/newrelic'
 
 # check required attributes
 verify_attributes do
   attributes [
     'node[:newrelic][:license_key]', 
     'node[:newrelic][:aws_cloudwatch][:install_path]', 
-    'node[:newrelic][:aws_cloudwatch][:user]',
     'node[:newrelic][:aws_cloudwatch][:aws_access_key]', 
     'node[:newrelic][:aws_cloudwatch][:aws_secret_key]', 
     'node[:newrelic][:aws_cloudwatch][:agents]'

@@ -1,0 +1,20 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+#  - name: centos-6.4
+
+suites:
+  - name: ec2_production 
+    run_list:
+      - recipe[newrelic_plugins::aws_cloudwatch]
+    attributes:
+      chef_environment: "ec2_production"
+    data_bags_path:                      "../chef-hosted/data_bags"
+    encrypted_data_bag_secret_key_path:  "../chef-hosted/.chef/encrypted_data_bag_secret"
+    environments_path:                  "../chef-hosted/environments"
