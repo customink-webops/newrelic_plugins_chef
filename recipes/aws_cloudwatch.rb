@@ -16,7 +16,7 @@ node.default[:newrelic][:aws_cloudwatch][:aws_access_key] = newrelic_plugin_aws_
 node.default[:newrelic][:aws_cloudwatch][:aws_secret_key] = newrelic_plugin_secret_secret_key
 
 # Attributes required to be set.
-node.default[:newrelic][:aws_cloudwatch][:agents] = [ 'rds' ]
+node.default[:newrelic][:aws_cloudwatch][:agents] = [ 'rds', 'mysql' ]
 node.default[:newrelic][:aws_cloudwatch][:install_path] = '/opt/newrelic'
 
 # check required attributes
